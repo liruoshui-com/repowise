@@ -5,12 +5,13 @@ import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import { openStore } from './store.js';
 import { loadCatalog, validatePreferences, matchProjects, escapeHtml as e } from './content.js';
 import { enqueue, deliver, mailLayout } from './mail.js';
+import { rssFeed } from './feed.js';
 
 const hash = token => createHash('sha256').update(token).digest('hex');
 const failure = (status, message) => Object.assign(new Error(message), { status });
 const publicDir = new URL('../public/', import.meta.url);
-const routes = new Set(['/', '/library', '/weekly', '/subscribe', '/manage', '/confirm', '/privacy', '/method', '/admin', '/dev/mail']);
-const assets = new Set(['/app.js', '/style.css', '/favicon.svg']);
+const routes = new Set(['/', '/library', '/weekly', '/archive', '/compare', '/subscribe', '/manage', '/confirm', '/privacy', '/method', '/admin', '/dev/mail']);
+const assets = new Set(['/app.js', '/catalog-tools.js', '/discovery.js', '/style.css', '/discovery.css', '/favicon.svg']);
 
 export function configuration(env = process.env) {
   const config = {
@@ -212,6 +213,21 @@ export function createApp(config, { fetchImpl = fetch } = {}) {
             const issue = catalog.issues.find(i => i.id === input.issueId);
             db.prepare('INSERT INTO publications VALUES (?,?,?) ON CONFLICT(issue_id) DO UPDATE SET approved_at=excluded.approved_at,content_hash=excluded.content_hash').run(input.issueId, Date.now(), issueHash(issue)); return json(200, { ok: true });
           }
+          if (path === '/api/admin/preview' && req.method === 'POST') {
+            const input = await body(req);
+            const issue = catalog.issues.find(i => i.id === input.issueId && i.status === 'published');
+            if (!issue) throw failure(400, '刊物不存在');
+            const result = { eligible: 0, alreadyProcessed: 0, unmatched: 0, inactive: db.prepare("SELECT COUNT(*) AS n FROM subscribers WHERE status != 'active'").get().n, projects: {} };
+            const projects = issue.projectIds.map(id => catalog.projects.find(p => p.id === id));
+            for (const s of db.prepare("SELECT id,preferences FROM subscribers WHERE status='active'").all()) {
+              if (db.prepare('SELECT 1 FROM outbox WHERE subscriber_id=? AND issue_id=?').get(s.id, issue.id)) { result.alreadyProcessed++; continue; }
+              const picks = matchProjects(projects, JSON.parse(s.preferences));
+              if (!picks.length) { result.unmatched++; continue; }
+              result.eligible++;
+              for (const p of picks) result.projects[p.id] = (result.projects[p.id] || 0) + 1;
+            }
+            return json(200, result);
+          }
           if (path === '/api/admin/send' && req.method === 'POST') return json(200, await digest((await body(req)).issueId));
           if (path === '/api/admin/retry' && req.method === 'POST') {
             const input = await body(req); const mail = db.prepare('SELECT * FROM outbox WHERE id=?').get(input.id);
@@ -225,6 +241,12 @@ export function createApp(config, { fetchImpl = fetch } = {}) {
         throw failure(404, '接口不存在');
       }
       if (!['GET', 'HEAD'].includes(req.method)) throw failure(405, '不支持此请求方法');
+      if (path === '/feed.xml') {
+        const topic = url.searchParams.get('topic');
+        if (topic && !catalog.topics.some(t => t.id === topic)) throw failure(400, '主题不存在');
+        res.writeHead(200, { 'Content-Type': 'application/rss+xml; charset=utf-8', 'Cache-Control': 'public, max-age=300' });
+        return res.end(req.method === 'HEAD' ? undefined : rssFeed(catalog, config.baseUrl, topic));
+      }
       if (path === '/dev/mail') local(req);
       const isProject = /^\/projects\/[a-z0-9-]+$/.test(path) && catalog.projects.some(p => `/projects/${p.id}` === path);
       if (!routes.has(path) && !assets.has(path) && !isProject) throw failure(404, '页面不存在');

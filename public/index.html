@@ -8,18 +8,21 @@
     <title>RepoWise · 为构建者精选</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/discovery.css">
+    <link rel="alternate" type="application/rss+xml" title="RepoWise 开源工具精选" href="/feed.xml">
     <script src="/app.js" type="module"></script>
   </head>
   <body>
     <a class="skip" href="#main">跳到主要内容</a>
     <header class="header"><div class="nav-wrap">
       <a class="brand" href="/" aria-label="RepoWise 首页"><span class="brand-icon">r<span>↗</span></span>RepoWise<span class="brand-dot">.</span></a>
-      <nav aria-label="主导航"><a href="/weekly" data-nav="weekly">本周精选</a><a href="/library" data-nav="library">项目库</a><a href="/method" data-nav="method">我们如何筛选</a></nav>
+      <nav aria-label="主导航"><a href="/weekly" data-nav="weekly">最新精选</a><a href="/library" data-nav="library">项目库</a><a href="/archive" data-nav="archive">往期刊物</a><a href="/method" data-nav="method">筛选原则</a></nav>
       <a class="button small dark" href="/subscribe">订阅周报 <span>↗</span></a>
     </div></header>
     <main id="main" tabindex="-1"><div class="loading">正在打开开源工具箱…</div></main>
     <footer><div class="footer-inner"><a class="brand" href="/">RepoWise<span class="brand-dot">.</span></a><p>好工具，让构建更进一步。</p><div><a href="/manage">管理订阅</a><a href="/privacy">隐私说明</a><a href="https://github.com/liruoshui-com/repowise" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div><span class="mono">BUILT FOR BUILDERS · 2026</span></div></footer>
     <div id="toast" role="status" aria-live="polite"></div>
+    <aside id="compare-tray" class="compare-tray" aria-label="已选比较项目" hidden></aside>
     <noscript>RepoWise 需要启用 JavaScript 才能加载项目与订阅表单。</noscript>
   </body>
 </html>

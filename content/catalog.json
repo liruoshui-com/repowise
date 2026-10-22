@@ -6,7 +6,7 @@
   ],
   "projects": [
     {
-      "id": "docling", "name": "Docling", "repo": "docling-project/docling", "mark": "D", "color": "violet",
+      "id": "docling", "name": "Docling", "repo": "docling-project/docling", "mark": "D", "color": "violet", "kind": "文档解析",
       "topics": ["knowledge"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "01 / 文档解析",
       "tagline": "先让文档可读，再让模型理解。",
       "summary": "将 PDF 等文档转换为结构化内容，为知识库的数据入口提供一个候选方案。",
@@ -18,7 +18,7 @@
       "sources": [{ "title": "官方仓库与功能说明", "url": "https://github.com/docling-project/docling" }]
     },
     {
-      "id": "llamaindex", "name": "LlamaIndex", "repo": "run-llama/llama_index", "mark": "L", "color": "blue",
+      "id": "llamaindex", "name": "LlamaIndex", "repo": "run-llama/llama_index", "mark": "L", "color": "blue", "kind": "应用编排",
       "topics": ["knowledge", "agents"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "02 / 数据与检索",
       "tagline": "把数据接入、索引和查询连起来。",
       "summary": "提供数据连接、索引和查询组件，适合探索基于私有资料的 AI 应用。",
@@ -30,7 +30,7 @@
       "sources": [{ "title": "官方仓库与框架说明", "url": "https://github.com/run-llama/llama_index" }]
     },
     {
-      "id": "qdrant", "name": "Qdrant", "repo": "qdrant/qdrant", "mark": "Q", "color": "rose",
+      "id": "qdrant", "name": "Qdrant", "repo": "qdrant/qdrant", "mark": "Q", "color": "rose", "kind": "向量存储",
       "topics": ["knowledge"], "languages": ["python", "typescript"], "deployment": ["selfhost", "cloud"], "stage": "03 / 向量存储",
       "tagline": "让向量检索带上业务条件。",
       "summary": "支持向量检索与元数据过滤，可通过服务端 API 接入应用。",
@@ -42,7 +42,7 @@
       "sources": [{ "title": "官方仓库与客户端说明", "url": "https://github.com/qdrant/qdrant" }]
     },
     {
-      "id": "ragas", "name": "Ragas", "repo": "vibrantlabsai/ragas", "mark": "R", "color": "green",
+      "id": "ragas", "name": "Ragas", "repo": "vibrantlabsai/ragas", "mark": "R", "color": "green", "kind": "应用评测",
       "topics": ["knowledge", "shipping"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "04 / 效果评测",
       "tagline": "改了检索流程，答案真的更好了吗？",
       "summary": "为 LLM 应用提供评测指标和测试数据生成工具，帮助比较迭代前后的表现。",
@@ -54,7 +54,7 @@
       "sources": [{ "title": "官方仓库与评测说明", "url": "https://github.com/vibrantlabsai/ragas" }]
     },
     {
-      "id": "langgraph", "name": "LangGraph", "repo": "langchain-ai/langgraph", "mark": "G", "color": "green",
+      "id": "langgraph", "name": "LangGraph", "repo": "langchain-ai/langgraph", "mark": "G", "color": "green", "kind": "应用编排",
       "topics": ["agents"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "工作流编排",
       "tagline": "让多步 Agent 的执行过程更明确。",
       "summary": "面向有状态 Agent 的编排框架，提供持久化与人工介入等能力。",
@@ -66,7 +66,7 @@
       "sources": [{ "title": "官方仓库与能力说明", "url": "https://github.com/langchain-ai/langgraph" }]
     },
     {
-      "id": "langfuse", "name": "Langfuse", "repo": "langfuse/langfuse", "mark": "F", "color": "amber",
+      "id": "langfuse", "name": "Langfuse", "repo": "langfuse/langfuse", "mark": "F", "color": "amber", "kind": "运行观测",
       "topics": ["shipping"], "languages": ["python", "typescript"], "deployment": ["selfhost", "cloud"], "stage": "运行追踪",
       "tagline": "从一次失败回答，追到发生问题的步骤。",
       "summary": "整合 LLM 调用追踪、提示管理和评测能力，提供自托管与托管使用路径。",
@@ -77,8 +77,62 @@
       "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
       "sources": [{ "title": "官方仓库与部署说明", "url": "https://github.com/langfuse/langfuse" }]
     }
+    ,{
+      "id": "haystack", "name": "Haystack", "repo": "deepset-ai/haystack", "mark": "H", "color": "amber", "kind": "应用编排",
+      "topics": ["knowledge", "agents"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "检索与组件管线",
+      "tagline": "把检索、路由与生成拆成明确的组件。",
+      "summary": "通过模块化组件和管线组织 RAG 与 Agent 应用，适合需要掌控数据流的 Python 团队。",
+      "fit": "需要明确连接检索、过滤、路由和生成步骤，并替换其中的某个组件。",
+      "tradeoff": "组件边界与输入输出需要设计；模型、检索后端和部署服务仍需自行选择和维护。",
+      "comparison": "可以与 LlamaIndex 一起评估。用同一个检索任务比较组件组合的表达方式和调试成本，先别凭功能清单决定迁移。",
+      "nextStep": "搭建一条带条件路由的检索管线，记录每步输入输出，并故意让某一步返回空结果。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库：模块化管线与组件", "url": "https://github.com/deepset-ai/haystack" }]
+    },
+    {
+      "id": "pydantic-ai", "name": "Pydantic AI", "repo": "pydantic/pydantic-ai", "mark": "P", "color": "rose", "kind": "应用编排",
+      "topics": ["agents"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "Python / 类型与工具",
+      "tagline": "让 Agent 的输入输出进入类型约束。",
+      "summary": "围绕 Python 类型、结构化输出和工具调用构建 Agent，便于把模型结果接入已有业务代码。",
+      "fit": "已有 Python 服务，希望模型返回稳定的数据结构，并在工具调用时明确依赖与参数。",
+      "tradeoff": "类型校验能发现结构问题，却不能证明事实正确；持久执行与外部模型也有各自的依赖和成本。",
+      "comparison": "与 LangGraph 比较时，先分清当前瓶颈是数据结构约束还是多步状态控制；两者并非所有功能都一一对应。",
+      "nextStep": "定义一个带字段约束的输出模型，测试缺字段、工具异常和无法回答的输入。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库：类型、工具与结构化输出", "url": "https://github.com/pydantic/pydantic-ai" }]
+    },
+    {
+      "id": "promptfoo", "name": "Promptfoo", "repo": "promptfoo/promptfoo", "mark": "p", "color": "violet", "kind": "应用评测",
+      "topics": ["shipping"], "languages": ["typescript", "python"], "deployment": ["local", "selfhost"], "stage": "回归 / 比较与评测",
+      "tagline": "把一次提示修改，变成可重复的回归比较。",
+      "summary": "用配置、断言和测试集比较提示、模型或应用输出，并可接入命令行与 CI 流程。",
+      "fit": "想在改提示或换模型之前，用同一组用例观察输出变化；可调用 HTTP 服务或 Python 等自定义接入。",
+      "tradeoff": "需要维护有代表性的用例与断言；运行需要 Node.js，模型请求和模型评判可能产生额外费用。",
+      "comparison": "与 Ragas 同属评测候选，但检查方式和集成习惯不同。先比较自己的用例如何表达，再判断哪种更容易持续运行。",
+      "nextStep": "写 10 个真实输入和明确断言，对比两组提示；保留失败输出供人工检查。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库：配置式评测与 CI", "url": "https://github.com/promptfoo/promptfoo" }, { "title": "官方文档：Python 自定义接入", "url": "https://www.promptfoo.dev/docs/providers/python/" }]
+    },
+    {
+      "id": "ai-sdk", "name": "Vercel AI SDK", "repo": "vercel/ai", "mark": "▲", "color": "blue", "kind": "应用编排",
+      "topics": ["agents"], "languages": ["typescript"], "deployment": ["local", "selfhost", "cloud"], "stage": "TypeScript / 应用接入",
+      "tagline": "把模型、工具和交互接进 TypeScript 应用。",
+      "summary": "提供统一的模型调用接口、工具调用与 UI 集成，面向 TypeScript 应用和 Agent 开发。",
+      "fit": "已有 TypeScript Web 应用，需要流式交互或切换模型接入方式，希望复用应用栈。",
+      "tradeoff": "不同提供商的能力仍有差别；服务端模型凭据、调用费用和工具执行权限要单独管理。",
+      "comparison": "先比较直接使用提供商 SDK 是否已足够。需要多提供商与交互组件时，再评估增加统一抽象的价值。",
+      "nextStep": "实现一个带工具调用的流式对话，检查取消请求、工具失败以及提供商不支持某能力时的处理。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库：TypeScript 工具包与 UI 集成", "url": "https://github.com/vercel/ai" }]
+    }
   ],
   "issues": [
+    {
+      "id": "002", "title": "Agent 开始接工具，下一步怎么选？", "subtitle": "先看应用栈，再看状态控制，最后把变化放进测试集。",
+      "date": "2026-10-22", "label": "Agent 选型专题", "status": "published", "projectIds": ["pydantic-ai", "ai-sdk", "langgraph", "promptfoo"],
+      "intro": "会调用一个工具，只是开始。要继续构建应用，得考虑返回值能否接进业务代码、失败后怎么处理，以及改动有没有引入退步。本期从 Python、TypeScript 两种应用栈出发，再看流程控制和回归评测。这四个项目有的互为候选，有的承担不同环节，不是必须一起安装的套餐。",
+      "editorNote": "先固定一个会失败的真实任务：工具超时、返回格式不对，或用户中途取消。用它检查异常路径，比只跑通演示更能帮助选型。本文基于官方资料整理，尚未实测；比较页用来整理取舍，不给工具排综合名次。"
+    },
     {
       "id": "001", "title": "从文档，到可用的 AI 知识库", "subtitle": "解析、检索、存储、评测。把一条工作流想清楚，再挑工具。",
       "date": "2026-10-22", "label": "创刊样刊", "status": "published", "projectIds": ["docling", "llamaindex", "qdrant", "ragas"],

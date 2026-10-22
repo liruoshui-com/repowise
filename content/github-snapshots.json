@@ -1,0 +1,164 @@
+{
+  "repositories": {
+    "docling-project/docling": {
+      "repo": "docling-project/docling",
+      "canonicalRepo": "docling-project/docling",
+      "fetchedAt": "2026-10-22T08:00:32.995Z",
+      "source": "https://api.github.com/repos/docling-project/docling",
+      "stars": 69333,
+      "forks": 5148,
+      "archived": false,
+      "pushedAt": "2026-10-22T05:26:06Z",
+      "license": "MIT",
+      "latestRelease": {
+        "tag": "v2.141.0",
+        "publishedAt": "2026-10-20T21:27:15Z",
+        "url": "https://github.com/docling-project/docling/releases/tag/v2.141.0"
+      }
+    },
+    "run-llama/llama_index": {
+      "repo": "run-llama/llama_index",
+      "canonicalRepo": "run-llama/llama_index",
+      "fetchedAt": "2026-10-22T08:00:34.086Z",
+      "source": "https://api.github.com/repos/run-llama/llama_index",
+      "stars": 52606,
+      "forks": 8406,
+      "archived": false,
+      "pushedAt": "2026-10-21T02:34:58Z",
+      "license": "MIT",
+      "latestRelease": {
+        "tag": "v0.14.25",
+        "publishedAt": "2026-09-21T16:22:27Z",
+        "url": "https://github.com/run-llama/llama_index/releases/tag/v0.14.25"
+      }
+    },
+    "qdrant/qdrant": {
+      "repo": "qdrant/qdrant",
+      "canonicalRepo": "qdrant/qdrant",
+      "fetchedAt": "2026-10-22T08:00:35.216Z",
+      "source": "https://api.github.com/repos/qdrant/qdrant",
+      "stars": 35182,
+      "forks": 2769,
+      "archived": false,
+      "pushedAt": "2026-10-22T06:42:22Z",
+      "license": "Apache-2.0",
+      "latestRelease": {
+        "tag": "v1.19.2",
+        "publishedAt": "2026-10-05T14:16:50Z",
+        "url": "https://github.com/qdrant/qdrant/releases/tag/v1.19.2"
+      }
+    },
+    "vibrantlabsai/ragas": {
+      "repo": "vibrantlabsai/ragas",
+      "canonicalRepo": "vibrantlabsai/ragas",
+      "fetchedAt": "2026-10-22T08:00:36.260Z",
+      "source": "https://api.github.com/repos/vibrantlabsai/ragas",
+      "stars": 16114,
+      "forks": 1768,
+      "archived": false,
+      "pushedAt": "2026-02-24T07:47:19Z",
+      "license": "Apache-2.0",
+      "latestRelease": {
+        "tag": "v0.4.3",
+        "publishedAt": "2026-01-13T17:47:29Z",
+        "url": "https://github.com/vibrantlabsai/ragas/releases/tag/v0.4.3"
+      }
+    },
+    "langchain-ai/langgraph": {
+      "repo": "langchain-ai/langgraph",
+      "canonicalRepo": "langchain-ai/langgraph",
+      "fetchedAt": "2026-10-22T08:00:37.500Z",
+      "source": "https://api.github.com/repos/langchain-ai/langgraph",
+      "stars": 43698,
+      "forks": 7485,
+      "archived": false,
+      "pushedAt": "2026-10-22T04:17:19Z",
+      "license": "MIT",
+      "latestRelease": {
+        "tag": "cli==0.4.37",
+        "publishedAt": "2026-10-19T14:06:22Z",
+        "url": "https://github.com/langchain-ai/langgraph/releases/tag/cli%3D%3D0.4.37"
+      }
+    },
+    "langfuse/langfuse": {
+      "repo": "langfuse/langfuse",
+      "canonicalRepo": "langfuse/langfuse",
+      "fetchedAt": "2026-10-22T08:00:38.565Z",
+      "source": "https://api.github.com/repos/langfuse/langfuse",
+      "stars": 36165,
+      "forks": 4040,
+      "archived": false,
+      "pushedAt": "2026-10-22T08:00:25Z",
+      "license": null,
+      "latestRelease": {
+        "tag": "v4.67.0",
+        "publishedAt": "2026-10-21T11:31:17Z",
+        "url": "https://github.com/langfuse/langfuse/releases/tag/v4.67.0"
+      }
+    },
+    "deepset-ai/haystack": {
+      "repo": "deepset-ai/haystack",
+      "canonicalRepo": "deepset-ai/haystack",
+      "fetchedAt": "2026-10-22T08:00:39.719Z",
+      "source": "https://api.github.com/repos/deepset-ai/haystack",
+      "stars": 26806,
+      "forks": 3319,
+      "archived": false,
+      "pushedAt": "2026-10-22T06:54:05Z",
+      "license": "Apache-2.0",
+      "latestRelease": {
+        "tag": "v3.4.1",
+        "publishedAt": "2026-10-21T19:10:58Z",
+        "url": "https://github.com/deepset-ai/haystack/releases/tag/v3.4.1"
+      }
+    },
+    "pydantic/pydantic-ai": {
+      "repo": "pydantic/pydantic-ai",
+      "canonicalRepo": "pydantic/pydantic-ai",
+      "fetchedAt": "2026-10-22T08:00:40.841Z",
+      "source": "https://api.github.com/repos/pydantic/pydantic-ai",
+      "stars": 20778,
+      "forks": 2987,
+      "archived": false,
+      "pushedAt": "2026-10-22T04:02:48Z",
+      "license": "MIT",
+      "latestRelease": {
+        "tag": "v2.59.0",
+        "publishedAt": "2026-10-21T04:36:13Z",
+        "url": "https://github.com/pydantic/pydantic-ai/releases/tag/v2.59.0"
+      }
+    },
+    "promptfoo/promptfoo": {
+      "repo": "promptfoo/promptfoo",
+      "canonicalRepo": "promptfoo/promptfoo",
+      "fetchedAt": "2026-10-22T08:00:41.928Z",
+      "source": "https://api.github.com/repos/promptfoo/promptfoo",
+      "stars": 26257,
+      "forks": 2536,
+      "archived": false,
+      "pushedAt": "2026-10-22T04:53:57Z",
+      "license": "MIT",
+      "latestRelease": {
+        "tag": "code-scan-action-0.2.2",
+        "publishedAt": "2026-10-08T15:46:03Z",
+        "url": "https://github.com/promptfoo/promptfoo/releases/tag/code-scan-action-0.2.2"
+      }
+    },
+    "vercel/ai": {
+      "repo": "vercel/ai",
+      "canonicalRepo": "vercel/ai",
+      "fetchedAt": "2026-10-22T08:00:43.056Z",
+      "source": "https://api.github.com/repos/vercel/ai",
+      "stars": 27443,
+      "forks": 5411,
+      "archived": false,
+      "pushedAt": "2026-10-22T03:41:48Z",
+      "license": null,
+      "latestRelease": {
+        "tag": "@ai-sdk/tool-bash@1.0.0",
+        "publishedAt": "2026-10-21T13:29:53Z",
+        "url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/tool-bash%401.0.0"
+      }
+    }
+  }
+}

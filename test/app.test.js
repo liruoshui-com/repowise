@@ -168,7 +168,7 @@ test('matching respects all constraints and content includes sources without inv
   const catalog = loadCatalog();
   const result = matchProjects(catalog.projects, { topics: ['knowledge'], language: 'typescript', deployment: 'cloud' });
   assert.deepEqual(result.map(p => p.id), ['qdrant']);
-  assert.equal(matchProjects(catalog.projects, { topics: ['agents'], language: 'typescript', deployment: 'local' }).length, 0);
+  assert.deepEqual(matchProjects(catalog.projects, { topics: ['agents'], language: 'typescript', deployment: 'local' }).map(p => p.id), ['ai-sdk']);
   for (const p of catalog.projects) { assert.equal(p.evidence, '资料核查'); assert.equal(p.testedVersion, null); assert.ok(p.sources[0].url.startsWith('https://github.com/')); }
 });
 
@@ -178,4 +178,37 @@ test('production configuration refuses incomplete email and security settings', 
   assert.throws(() => configuration({ MAIL_MODE: 'resend' }), /RESEND_API_KEY/);
   assert.throws(() => configuration({ BASE_URL: 'https://example.com/path' }), /web origin/);
   assert.doesNotThrow(() => configuration({ NODE_ENV: 'production', BASE_URL: 'https://example.com', MAIL_MODE: 'resend', RESEND_API_KEY: 'test', MAIL_FROM: 'test@example.com', ADMIN_TOKEN: adminToken }));
+});
+
+test('editor preview counts the exact audience without creating mail or login tokens', async t => {
+  const f = await fixture(t);
+  await f.activate('eligible@example.com', { topics: ['agents'], language: 'python', deployment: 'selfhost' });
+  await f.activate('unmatched@example.com', prefs);
+  await f.signup('pending@example.com');
+  const beforeMail = f.db.prepare('SELECT COUNT(*) AS n FROM outbox').get().n;
+  const beforeTokens = f.db.prepare('SELECT COUNT(*) AS n FROM tokens').get().n;
+  assert.equal((await f.request('/api/admin/preview', 'POST', { issueId: '002' })).status, 401);
+  const preview = await f.request('/api/admin/preview', 'POST', { issueId: '002' }, adminToken);
+  assert.deepEqual(preview.data, { eligible: 1, alreadyProcessed: 0, unmatched: 1, inactive: 1, projects: { 'pydantic-ai': 1, langgraph: 1 } });
+  assert.equal(f.db.prepare('SELECT COUNT(*) AS n FROM outbox').get().n, beforeMail);
+  assert.equal(f.db.prepare('SELECT COUNT(*) AS n FROM tokens').get().n, beforeTokens);
+  assert.doesNotMatch(JSON.stringify(preview.data), /@|token/);
+  await f.request('/api/admin/approve', 'POST', { issueId: '002' }, adminToken);
+  assert.equal((await f.request('/api/admin/send', 'POST', { issueId: '002' }, adminToken)).data.queued, preview.data.eligible);
+  const after = await f.request('/api/admin/preview', 'POST', { issueId: '002' }, adminToken);
+  assert.equal(after.data.alreadyProcessed, 1); assert.equal(after.data.eligible, 0);
+});
+
+test('RSS is public, includes only matching published issues and never trusts the Host header', async t => {
+  const f = await fixture(t);
+  f.catalog.issues.push({ ...f.catalog.issues[0], id: 'private-draft', status: 'draft', title: 'hidden draft' });
+  const response = await fetch(`${f.config.baseUrl}/feed.xml?topic=knowledge`);
+  assert.equal(response.status, 200); assert.match(response.headers.get('content-type'), /application\/rss\+xml/);
+  const text = await response.text();
+  assert.match(text, /weekly\?issue=001/); assert.doesNotMatch(text, /weekly\?issue=002/); assert.doesNotMatch(text, /hidden draft/);
+  assert.match(text, /isPermaLink="true"/);
+  assert.equal((await fetch(`${f.config.baseUrl}/feed.xml?topic=bogus`)).status, 400);
+  const head = await fetch(`${f.config.baseUrl}/feed.xml`, { method: 'HEAD' });
+  assert.equal(head.status, 200); assert.equal(await head.text(), '');
+  assert.equal((await fetch(`${f.config.baseUrl}/feed.xml`, { method: 'POST' })).status, 405);
 });
