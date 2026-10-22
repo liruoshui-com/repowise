@@ -1,0 +1,21 @@
+{
+  "name": "repowise",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "按实际开发场景订阅开源 AI 工具精选",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "dev": "node --watch --env-file-if-exists=.env server/index.js",
+    "test": "node --test test/*.test.js",
+    "test:browser": "playwright test",
+    "collect": "node --env-file-if-exists=.env scripts/collect.js",
+    "digest": "node --env-file-if-exists=.env scripts/digest.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  }
+}

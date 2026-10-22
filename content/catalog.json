@@ -1,0 +1,89 @@
+{
+  "topics": [
+    { "id": "knowledge", "name": "文档与知识库", "short": "知识库 / RAG", "description": "让自己的数据成为应用的知识。" },
+    { "id": "agents", "name": "Agent 与工作流", "short": "Agent / 工作流", "description": "把工具调用变成可控的执行流程。" },
+    { "id": "shipping", "name": "上线与维护", "short": "评测 / 可观测", "description": "看清效果、错误与运行成本。" }
+  ],
+  "projects": [
+    {
+      "id": "docling", "name": "Docling", "repo": "docling-project/docling", "mark": "D", "color": "violet",
+      "topics": ["knowledge"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "01 / 文档解析",
+      "tagline": "先让文档可读，再让模型理解。",
+      "summary": "将 PDF 等文档转换为结构化内容，为知识库的数据入口提供一个候选方案。",
+      "fit": "资料里有表格、扫描页或复杂排版，希望在进入检索环节前保留更多结构。",
+      "tradeoff": "不同解析管线的模型、资源和初始化要求不同；复杂文档的实际效果需要用自己的样本确认。",
+      "comparison": "如果简单文本提取已满足需求，可以先保留原方案；遇到阅读顺序和表格结构问题时，再做小样本对比。",
+      "nextStep": "选 5 份最难处理的文档，检查阅读顺序、表格完整性和单页耗时。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库与功能说明", "url": "https://github.com/docling-project/docling" }]
+    },
+    {
+      "id": "llamaindex", "name": "LlamaIndex", "repo": "run-llama/llama_index", "mark": "L", "color": "blue",
+      "topics": ["knowledge", "agents"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "02 / 数据与检索",
+      "tagline": "把数据接入、索引和查询连起来。",
+      "summary": "提供数据连接、索引和查询组件，适合探索基于私有资料的 AI 应用。",
+      "fit": "需要组合多个数据源和检索步骤，希望从现成组件开始搭建。",
+      "tradeoff": "需要理解框架抽象和集成包；所选模型、嵌入或托管服务可能产生独立费用。",
+      "comparison": "单一数据源的短流程可以先用直接 SDK 调用；当连接器与检索组合增多时，再评估框架的收益。",
+      "nextStep": "用同一组问题比较直接检索与框架方案，并记录引用来源是否正确。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库与框架说明", "url": "https://github.com/run-llama/llama_index" }]
+    },
+    {
+      "id": "qdrant", "name": "Qdrant", "repo": "qdrant/qdrant", "mark": "Q", "color": "rose",
+      "topics": ["knowledge"], "languages": ["python", "typescript"], "deployment": ["selfhost", "cloud"], "stage": "03 / 向量存储",
+      "tagline": "让向量检索带上业务条件。",
+      "summary": "支持向量检索与元数据过滤，可通过服务端 API 接入应用。",
+      "fit": "需要按文档属性过滤结果，或希望把向量检索作为独立服务维护。",
+      "tradeoff": "自托管需要处理访问控制、备份和资源规划；嵌入生成与答案生成仍由其他组件承担。",
+      "comparison": "先确认现有数据库的检索能力是否已够用，再考虑引入独立向量数据库的维护成本。",
+      "nextStep": "用真实数据测试带业务过滤条件的检索，并记录延迟和漏检情况。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库与客户端说明", "url": "https://github.com/qdrant/qdrant" }]
+    },
+    {
+      "id": "ragas", "name": "Ragas", "repo": "vibrantlabsai/ragas", "mark": "R", "color": "green",
+      "topics": ["knowledge", "shipping"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "04 / 效果评测",
+      "tagline": "改了检索流程，答案真的更好了吗？",
+      "summary": "为 LLM 应用提供评测指标和测试数据生成工具，帮助比较迭代前后的表现。",
+      "fit": "已经有可运行的知识库，想把回答质量从主观感受变成可重复的检查。",
+      "tradeoff": "使用模型评判的指标会受评判模型和提示影响，并可能产生 API 费用；仍需人工抽查。",
+      "comparison": "先建立一小组人工核验的问题，再引入自动评测；分数变化应和具体失败案例一起解释。",
+      "nextStep": "固定 20 个真实问题，在相同评测配置下对比两个检索版本。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库与评测说明", "url": "https://github.com/vibrantlabsai/ragas" }]
+    },
+    {
+      "id": "langgraph", "name": "LangGraph", "repo": "langchain-ai/langgraph", "mark": "G", "color": "green",
+      "topics": ["agents"], "languages": ["python"], "deployment": ["local", "selfhost"], "stage": "工作流编排",
+      "tagline": "让多步 Agent 的执行过程更明确。",
+      "summary": "面向有状态 Agent 的编排框架，提供持久化与人工介入等能力。",
+      "fit": "流程需要分支、恢复执行或人工检查，简单的一次模型调用已不够表达需求。",
+      "tradeoff": "状态设计和恢复语义需要额外学习；引入框架不自动保证工具调用正确。",
+      "comparison": "短小且固定的流程可以先用普通函数；需要明确恢复点时再比较编排方案。",
+      "nextStep": "构建一个带人工确认的流程，主动中断并检查恢复后的状态。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库与能力说明", "url": "https://github.com/langchain-ai/langgraph" }]
+    },
+    {
+      "id": "langfuse", "name": "Langfuse", "repo": "langfuse/langfuse", "mark": "F", "color": "amber",
+      "topics": ["shipping"], "languages": ["python", "typescript"], "deployment": ["selfhost", "cloud"], "stage": "运行追踪",
+      "tagline": "从一次失败回答，追到发生问题的步骤。",
+      "summary": "整合 LLM 调用追踪、提示管理和评测能力，提供自托管与托管使用路径。",
+      "fit": "应用已经有多步调用，需要查看一次请求的执行过程并追踪效果变化。",
+      "tradeoff": "自托管包含多个基础组件；记录输入输出前需要确定敏感内容的处理与保留规则。",
+      "comparison": "先明确现有日志缺少什么；如果只需要基础错误记录，可先完善日志再决定是否增加平台。",
+      "nextStep": "接入一条测试链路，检查能否从错误回答追到检索与模型调用。",
+      "evidence": "资料核查", "verifiedAt": "2026-10-22", "testedVersion": null,
+      "sources": [{ "title": "官方仓库与部署说明", "url": "https://github.com/langfuse/langfuse" }]
+    }
+  ],
+  "issues": [
+    {
+      "id": "001", "title": "从文档，到可用的 AI 知识库", "subtitle": "解析、检索、存储、评测。把一条工作流想清楚，再挑工具。",
+      "date": "2026-10-22", "label": "创刊样刊", "status": "published", "projectIds": ["docling", "llamaindex", "qdrant", "ragas"],
+      "intro": "做知识库时，先别急着换模型。资料是否被正确解析、需要的内容是否被找到、回答是否有依据，都值得分别检查。本期沿着这条链路挑了四个候选工具。它们不是必须一起安装的套装，也不构成经过实测的最佳组合。",
+      "editorNote": "先准备一小组真实文档和问题，再比较工具。每次只改变一个环节，保留失败案例。只有结果更好、维护代价也可接受，迁移才有意义。"
+    }
+  ]
+}

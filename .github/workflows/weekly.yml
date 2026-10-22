@@ -1,0 +1,25 @@
+name: Send approved weekly issue
+on:
+  workflow_dispatch:
+  schedule:
+    # Friday 09:00 Asia/Shanghai. Does not approve content automatically.
+    - cron: '0 1 * * 5'
+permissions:
+  contents: read
+concurrency:
+  group: weekly-delivery
+  cancel-in-progress: false
+jobs:
+  send:
+    if: vars.WEEKLY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/digest.js --send
+        env:
+          BASE_URL: ${{ vars.SITE_URL }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
